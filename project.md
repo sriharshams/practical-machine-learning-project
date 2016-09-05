@@ -1,6 +1,14 @@
-# Predictive Analytics For Weight Lifting Exercises Dataset
-Sriharsha M S  
-09/04/2016  
+---
+title: "Predictive Analytics For Weight Lifting Exercises Dataset"
+author: "Sriharsha M S"
+date: "09/04/2016"
+output:
+  html_document:
+    keep_md: yes
+  md_document:
+    variant: markdown_github
+  pdf_document: default
+---
 
 
 
@@ -50,17 +58,6 @@ dim(training.raw)
 
 ```
 ## [1] 19622   160
-```
-
-```r
-# Res 2 - excluded because excessivness
-# head(training.raw)
-
-# Res 3 - excluded because excessivness
-#str(training.raw)
-
-# Res 4 - excluded because excessivness
-#summary(training.raw)
 ```
 
 
@@ -150,7 +147,7 @@ p2 <- ggplot(training.subSetTrain, aes(classe, magnet_arm_x)) +
 multiplot(p1,p2,cols=2)
 ```
 
-![](project_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 Clearly there is no hard seperation of classes possible using only these 'highly' correlated features.
 Let's train some models to get closer to a way of predicting these classe's
@@ -170,7 +167,7 @@ excludeColumns <- c(highlyCorrelated, classeIndex)
 corrplot(correlationMatrix, method="color", type="lower", order="hclust", tl.cex=0.70, tl.col="black", tl.srt = 45, diag = FALSE)
 ```
 
-![](project_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 
 We see that there are some features that aree quite correlated with each other.
 We will have a model with these excluded. Also we'll try and reduce the features by running PCA on all and the excluded subset of the features
@@ -213,7 +210,7 @@ proc.time() - start
 
 ```
 ##    user  system elapsed 
-## 106.593   2.278 109.041
+## 103.741   2.339 106.179
 ```
 
 ```r
@@ -231,7 +228,7 @@ proc.time() - start
 
 ```
 ##    user  system elapsed 
-## 102.062   2.871 105.591
+## 104.407   3.197 108.321
 ```
 
 ```r
@@ -249,7 +246,7 @@ proc.time() - start
 
 ```
 ##    user  system elapsed 
-## 104.233   3.257 108.425
+## 100.990   3.022 104.710
 ```
 
 ```r
@@ -267,7 +264,7 @@ proc.time() - start
 
 ```
 ##    user  system elapsed 
-## 107.998   3.210 112.560
+##  99.069   3.205 103.216
 ```
 
 ## Model examination
@@ -486,7 +483,7 @@ varImpPlot(rfMod.exclude, cex=0.7, pch=16, main='Variable Importance Plot: rfMod
 plot(rfMod.exclude, , cex=0.7, main='Error vs No. of trees plot')
 ```
 
-![](project_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
 
 ```r
 par(mfrow=c(1,1)) 
@@ -503,7 +500,7 @@ palette <- brewer.pal(length(classeLevels), "Set1")
 rfMod.mds <- MDSplot(rfMod.exclude, as.factor(classeLevels), k=2, pch=20, palette=palette)
 ```
 
-![](project_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
 
 ```r
 library(cluster)
@@ -521,7 +518,7 @@ legend("bottomleft", legend=unique(rfMod.pam$clustering), pch=seq(15,14+length(c
   legend("topleft", legend=classeLevels, pch = 16, col=palette, title = "Classification")
 ```
 
-![](project_files/figure-html/unnamed-chunk-15-2.png)<!-- -->
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-2.png)
 
 ```r
 proc.time() - start
@@ -529,7 +526,7 @@ proc.time() - start
 
 ```
 ##     user   system  elapsed 
-## 4362.749   42.032 5120.934
+## 4238.500   28.353 4279.373
 ```
 
 
